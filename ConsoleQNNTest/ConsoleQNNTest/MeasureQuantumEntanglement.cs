@@ -17,6 +17,7 @@ namespace ConsoleQNNTest
         private readonly int TimeChunks;
         private readonly int Epochs;
         private readonly bool Verbose;
+        private readonly bool Signed;
         private readonly double Tf;
         private readonly string FileName;
         private StreamWriter Stream;
@@ -24,14 +25,16 @@ namespace ConsoleQNNTest
         private readonly int[] States = { 1, 2, 3, 4 };
         private readonly double[] Entanglement = { 1.0, 0, 0, 0.663325 };          // There must be one target for every initial state
 
-        public MeasureQuantumEntanglement(int timeChunks, double tf, int count, int epochs, bool verbose, string filename)
+        public MeasureQuantumEntanglement(int timeChunks, double tf, int count, int epochs, bool verbose, bool signed, string filename)
         {
             TimeChunks = timeChunks;
-            Count = count;
-            Epochs = epochs;
-            Verbose = verbose;
-            FileName = filename;
-            CountStep = DEFAULTCOUNTSTEP;
+            Tf         = tf;
+            Count      = count;
+            Epochs     = epochs;
+            Verbose    = verbose;
+            Signed     = signed;
+            FileName   = filename;
+            CountStep  = DEFAULTCOUNTSTEP;
 
             if (String.IsNullOrEmpty(FileName))
             {
@@ -95,14 +98,18 @@ namespace ConsoleQNNTest
             {
                 double[] entanglement = network.MeasureEntanglementWitness(States, Count);
 
-                for (int i = 0; i < TimeChunks; i++)
+                if (!Signed)
                 {
-                    entanglement[i] = Math.Abs(entanglement[i]);
+                    for (int i = 0; i < TimeChunks; i++)
+                    {
+                        entanglement[i] = Math.Abs(entanglement[i]);
+                    }
                 }
 
                 if (Verbose)
                 {
                     Console.WriteLine("     " + epoch.ToString("0000000") + ":  " +
+                                                entanglement[0].ToString(FMT) + "  " +
                                                 entanglement[1].ToString(FMT) + "  " +
                                                 entanglement[2].ToString(FMT) + "  " +
                                                 entanglement[3].ToString(FMT));
@@ -126,9 +133,12 @@ namespace ConsoleQNNTest
             {
                 double[] entanglement = network.MeasureEntanglementWitness(States, currentCount);
 
-                for (int i = 0; i < TimeChunks; i++)
+                if (!Signed)
                 {
-                    entanglement[i] = Math.Abs(entanglement[i]);
+                    for (int i = 0; i < TimeChunks; i++)
+                    {
+                        entanglement[i] = Math.Abs(entanglement[i]);
+                    }
                 }
 
                 if (Verbose)

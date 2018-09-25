@@ -26,8 +26,8 @@ namespace Quantum.QNeuralNetwork
         private readonly double[] BiasB = { 0.092889, 0.11577, 0.095443, 0.083292 };    // { 0.0929, 0.116, 0.0954, 0.0833 };
         private readonly double[] Coupling = { 0.03820, 0.12759, 0.11692, 0.038180 };   // { 0.0382, 0.128,  0.117, 0.0382 };
 
-        private int TimeChunks;
-        private double TimeInterval;
+        private readonly int TimeChunks;
+        private readonly double TimeInterval;
 
         public CoupledTwoQubitQNN(int numberOfTimeChunks, double timeInterval)
         {
@@ -68,7 +68,7 @@ namespace Quantum.QNeuralNetwork
             {
                 foreach (int n in states)
                 {
-                    var res = QNNChunkedMeasureEntanglement.Run(sim, weights, count, n).Result;
+                    long res = QNNChunkedMeasureEntanglement.Run(sim, weights, count, n).Result;
 
                     // data processing for returned values from quantum neural network
                     witness[n - 1] = (double)res / (double)count;

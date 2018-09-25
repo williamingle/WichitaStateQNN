@@ -20,6 +20,9 @@ namespace ConsoleQNNTest
             [Option('o', "output", Required = false, HelpText = "output file (csv).")]
             public string OutputFile { get; set; }
 
+            [Option('s', "signed", Required = false, HelpText = "Emit signed values.")]
+            public bool Signed { get; set; }
+
             [Option('t', "timechunks", Required = false, Default = 4, HelpText = "Number of time chunks per epoch.")]
             public int Chunks { get; set; }
 
@@ -39,13 +42,13 @@ namespace ConsoleQNNTest
 
                     if (o.Witness)
                     {
-                        MeasureQuantumEntanglement quantumEntanglement = new MeasureQuantumEntanglement(o.Chunks, o.FinalTime, o.Count, o.Epochs, o.Verbose, o.OutputFile);
+                        MeasureQuantumEntanglement quantumEntanglement = new MeasureQuantumEntanglement(o.Chunks, o.FinalTime, o.Count, o.Epochs, o.Verbose, o.Signed, o.OutputFile);
 
                         quantumEntanglement.RunWitnessTest();
                     }
                     else
                     {
-                        MeasureQuantumEntanglement quantumEntanglement = new MeasureQuantumEntanglement(o.Chunks, o.FinalTime, o.Count, o.Epochs, o.Verbose, o.OutputFile);
+                        MeasureQuantumEntanglement quantumEntanglement = new MeasureQuantumEntanglement(o.Chunks, o.FinalTime, o.Count, o.Epochs, o.Verbose, o.Signed, o.OutputFile);
 
                         quantumEntanglement.RunQNNTest();
                     }
