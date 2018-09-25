@@ -2,7 +2,7 @@
   "profiles": {
     "ConsoleQNNTest": {
       "commandName": "Project",
-      "commandLineArgs": "-w"
+      "commandLineArgs": "-c 20000 -w"
     }
   }
 }
