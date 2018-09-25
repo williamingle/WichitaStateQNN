@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "ConsoleQNNTest": {
+      "commandName": "Project",
+      "commandLineArgs": "-w"
+    }
+  }
+}
