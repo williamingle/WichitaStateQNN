@@ -26,6 +26,9 @@ namespace Quantum.QNeuralNetwork
         private readonly double[] BiasB = { 0.092889, 0.11577, 0.095443, 0.083292 };    // { 0.0929, 0.116, 0.0954, 0.0833 };
         private readonly double[] Coupling = { 0.03820, 0.12759, 0.11692, 0.038180 };   // { 0.0382, 0.128,  0.117, 0.0382 };
 
+        //		let parameters = [4.511031; 2.300524; 5.355890]; // values come from Cosine-Sine Decomp, computed in MATLAB
+
+
         private readonly int TimeChunks;
         private readonly double TimeInterval;
 
@@ -58,21 +61,19 @@ namespace Quantum.QNeuralNetwork
             return weights;
         }
 
-        public double[] MeasureEntanglementWitness(int[] states, int count)
+        public double MeasureEntanglementWitness(double[] state, int count)
         {
-            double[] witness = new double[states.Length];
+            double witness = 0;
 
             QArray<QArray<double>> weights = GetAngles(TimeInterval);
+            QArray<double> parameters = new QArray<double>(state);
 
             using (var sim = new QuantumSimulator())
             {
-                foreach (int n in states)
-                {
-                    long res = QNNChunkedMeasureEntanglement.Run(sim, weights, count, n).Result;
+                long res = QNNChunkedMeasureEntanglement.Run(sim, weights, parameters, count).Result;
 
-                    // data processing for returned values from quantum neural network
-                    witness[n - 1] = (double)res / (double)count;
-                }
+                // data processing for returned values from quantum neural network
+                witness = (double)res / (double)count;
             }
 
             return witness;
