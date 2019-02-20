@@ -1,6 +1,8 @@
 ﻿using System;
 using Microsoft.Quantum.Simulation.Core;
 using Microsoft.Quantum.Simulation.Simulators;
+using System.Linq;
+using System.Numerics;
 
 namespace Quantum.QNeuralNetwork
 {
@@ -61,12 +63,18 @@ namespace Quantum.QNeuralNetwork
             return weights;
         }
 
-        public double MeasureEntanglementWitness(double[] state, int count)
+        public double MeasureEntanglementWitness(Complex[] state, int count)
         {
             double witness = 0;
 
             QArray<QArray<double>> weights = GetAngles(TimeInterval);
-            QArray<double> parameters = new QArray<double>(state);
+            QArray<double> parameters = new QArray<double>(state.Length*2);
+
+            for (int n=0; n<state.Length; n++)
+            {
+                parameters[2 * n] = state[n].Real;
+                parameters[2 * n + 1] = state[n].Imaginary;
+            }
 
             using (var sim = new QuantumSimulator())
             {

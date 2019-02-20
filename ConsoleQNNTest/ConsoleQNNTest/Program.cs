@@ -1,4 +1,17 @@
-﻿using System;
+﻿//   ConsoleQNNTest is a console application that drives the test ConsoleQNNTest
+//
+//   Coopyright © 2019 Wichita State University
+//   The copyright holders grant the freedom to copy, modify, convey, adapt, and/or 
+//   redistribute this work (except Appendices B–E) under the terms of the Creative 
+//   Commons Attribution Share Alike 4.0 International License. A copy of that license 
+//   is available at https://creativecommons.org/licenses/by-_sa/4.0/legalcode. 
+//
+//   Nathan Lee Thompson
+//   William Ingle
+//   Elizabeth Behrman
+//   James Steck
+
+using System;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using CommandLine;
@@ -20,7 +33,7 @@ namespace ConsoleQNNTest
             [Option('f', "timef", Required = false, HelpText = "T_f for each time chunk.")]
             public double FinalTime{ get; set; }
 
-            [Option('g', "gamma", Required = false, HelpText = "A comma-delimited list of values gamma for partially entangled states")]
+            [Option('g', "gamma", Required = false, HelpText = "A comma-delimited list of complex values gamma in the unit circle")]
             public string GammaString { get; set; }
 
             [Option('o', "output", Required = false, HelpText = "Output file (csv).")]

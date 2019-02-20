@@ -97,7 +97,7 @@ namespace Quantum.QNeuralNetwork
 							   ComplexPolar(parameters[2],parameters[3]); 
 							   ComplexPolar(parameters[4],parameters[5]); 
 							   ComplexPolar(parameters[6],parameters[7]) ];
-				
+
 				let qubitsBE = BigEndian(qubits);
 				
 				PrepareArbitraryState(pcoeff, qubitsBE);
@@ -105,33 +105,33 @@ namespace Quantum.QNeuralNetwork
 		}
 	}
 
-	operation BeginState (n: Int, qubits: Qubit[]) : ()
-    {
-        body
-        {
-            if (n == 1)            // Bell state
-			{
-				H(qubits[0]);
-				CNOT(qubits[0], qubits[1]);
-			}
-            elif (n == 2)          // Flat state
-            {
-				H(qubits[0]);
-				H(qubits[1]);
-            }
-			elif (n == 3)          // C state 
-			{
-				X(qubits[0]);
-				Ry(2.0*ArcCos(1.0/Sqrt(5.0)), qubits[1]);   // 2*arccos(1/sqrt(5)) ~ 2.21429734
-			}
-			else                   // Partially entangled state
-			{
-				let pcoeff = [ComplexPolar(1.0/Sqrt(3.0),0.0); ComplexPolar(1.0/Sqrt(3.0),0.0); ComplexPolar(1.0/Sqrt(3.0),0.0); ComplexPolar(0.0,0.0)];
-				let qubitsBE = BigEndian(qubits);
-				PrepareArbitraryState(pcoeff, qubitsBE);
-			}
-        }
-    }
+	//operation BeginState (n: Int, qubits: Qubit[]) : ()
+    //{
+        //body
+        //{
+            //if (n == 1)            // Bell state
+			//{
+				//H(qubits[0]);
+				//CNOT(qubits[0], qubits[1]);
+			//}
+            //elif (n == 2)          // Flat state
+            //{
+				//H(qubits[0]);
+				//H(qubits[1]);
+            //}
+			//elif (n == 3)          // C state 
+			//{
+				//X(qubits[0]);
+				//Ry(2.0*ArcCos(1.0/Sqrt(5.0)), qubits[1]);   // 2*arccos(1/sqrt(5)) ~ 2.21429734
+			//}
+			//else                   // Partially entangled state
+			//{
+				//let pcoeff = [ComplexPolar(1.0/Sqrt(3.0),0.0); ComplexPolar(1.0/Sqrt(3.0),0.0); ComplexPolar(1.0/Sqrt(3.0),0.0); ComplexPolar(0.0,0.0)];
+				//let qubitsBE = BigEndian(qubits);
+				//PrepareArbitraryState(pcoeff, qubitsBE);
+			//}
+        //}
+    //}
 
 	operation QNNTimeChunk (weights: Double[], qubits: Qubit[]) : ()
     {
